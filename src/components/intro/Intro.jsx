@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
+import { Link as RLink } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const Upload = () => {
+const Intro = () => {
   const classes = useStyles()
 
   return (
@@ -34,8 +35,8 @@ const Upload = () => {
         <div className={classes.heroButtons}>
           <Grid container spacing={2} justify='center'>
             <Grid item>
-              <Button variant='contained' color='primary'>
-                Upload
+              <Button variant='contained' color='primary' component={RLink} to='/add-video'>
+                Upload now
               </Button>
             </Grid>
             <Grid item>
@@ -50,4 +51,4 @@ const Upload = () => {
   )
 }
 
-export default Upload
+export default Intro

@@ -1,22 +1,21 @@
 import React from 'react'
 
 import CssBaseline from '@material-ui/core/CssBaseline'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 import Header from './components/header/Header'
-import Upload from './components/upload/Upload'
-import Album from './components/album/Album'
+import Main from './components/main/Main'
 import Footer from './components/footer/Footer'
 
-export default function App () {
+const App = () => {
   return (
-    <>
+    <Router>
       <CssBaseline />
       <Header />
-      <main>
-        <Upload />
-        <Album />
-      </main>
+      <Main />
       <Footer />
-    </>
+    </Router>
   )
 }
+
+export default App
