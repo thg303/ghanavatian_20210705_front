@@ -45,7 +45,8 @@
       "jest"
     ],
     "globals": [
-      "fetch"
+      "fetch",
+      "FormData"
     ]
   },
   "devDependencies": {

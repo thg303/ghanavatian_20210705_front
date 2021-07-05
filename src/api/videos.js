@@ -1,10 +1,9 @@
 import axios from 'axios'
 
-
 export const createVideo = async (data) => {
-  const {title, categoryId, poster, clip} = data
+  const { title, categoryId, poster, clip } = data
 
-  let form = new FormData()
+  const form = new FormData()
   form.append('video[title]', title)
   form.append('video[category_id]', categoryId)
   form.append('video[poster]', poster)
@@ -15,10 +14,16 @@ export const createVideo = async (data) => {
       method: 'post',
       url: `${process.env.REACT_APP_API_URL}/videos`,
       data: form,
-      headers: {'Content-Type': 'multipart/form-data'}
+      headers: { 'Content-Type': 'multipart/form-data' }
     })
     console.log('result:', result)
   } catch (e) {
-    console.log({e})
+    console.log({ e })
   }
+}
+
+export const getVideos = async (setData) => {
+  const result = await axios(`${process.env.REACT_APP_API_URL}/videos`)
+  console.log('got response:', result)
+  setData(result.data)
 }

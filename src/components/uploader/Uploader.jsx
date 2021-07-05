@@ -7,11 +7,10 @@ import Box from '@material-ui/core/Box'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import Button from '@material-ui/core/Button'
 import { Link as RLink } from 'react-router-dom'
-import {DropzoneArea} from 'material-ui-dropzone'
+import { DropzoneArea } from 'material-ui-dropzone'
 
-import { Backdrop } from '@material-ui/core'
-import { CircularProgress } from '@material-ui/core'
-import { Snackbar } from '@material-ui/core'
+import { Backdrop, CircularProgress, Snackbar } from '@material-ui/core'
+
 import { Alert } from '@material-ui/lab'
 
 import { getCategories } from '../../api/categories'
@@ -34,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
-    color: '#fff',
+    color: '#fff'
   }
 }))
 
@@ -45,7 +44,7 @@ const Uploader = () => {
   const [categoryId, setCategoryId] = useState(null)
   const [poster, setPoster] = useState(null)
   const [clip, setClip] = useState(null)
-  const [errors, setErrors] = useState({title: '', categoryId: '', poster: '', clip: ''})
+  const [errors, setErrors] = useState({ title: '', categoryId: '', poster: '', clip: '' })
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -54,17 +53,16 @@ const Uploader = () => {
   }, [])
 
   const updateTitle = value => {
-    if (!value) { setErrors({...errors, title: 'Title is required'}) }
+    if (!value) { setErrors({ ...errors, title: 'Title is required' }) }
     setTitle(value)
   }
   const updateCategory = value => {
-    if (!value) { setErrors({...errors, categoryId: 'A category should be selected'}) }
+    if (!value) { setErrors({ ...errors, categoryId: 'A category should be selected' }) }
     setCategoryId(value)
   }
 
-
   const validator = () => {
-    let newErrors = {}
+    const newErrors = {}
     if (!title) { newErrors.title = 'Title is required' }
     if (!categoryId) { newErrors.categoryId = 'A category should be selected' }
     if (!poster) { newErrors.poster = 'we need a poster for your video' }
@@ -86,7 +84,7 @@ const Uploader = () => {
 
     setLoading(true)
 
-    createVideo({title, categoryId: categoryId.value, poster, clip})
+    createVideo({ title, categoryId: categoryId.value, poster, clip })
       .then(() => setSuccess(true))
       .catch(e => console.log('errr'))
       .finally(() => setLoading(false))
@@ -102,52 +100,52 @@ const Uploader = () => {
           back
         </Button>
         <Typography component='h1' variant='h3' align='center' color='textPrimary' gutterBottom>Upload a video</Typography>
-        <form method="post" className={classes.form} noValidate onSubmit={submit}>
-          <Box component="div" my={1}>
+        <form method='post' className={classes.form} noValidate onSubmit={submit}>
+          <Box component='div' my={1}>
             <TextField
               variant='outlined'
               required
-              onChange={(_, value) => setTitle(value)}
+              onChange={e => setTitle(e.target.value)}
               fullWidth
               id='title'
               label='Video Title'
               name='title'
               autoFocus
             />
-            {errors.title && <Typography color="error" mt={3}>{errors.title}</Typography>}
+            {errors.title && <Typography color='error' mt={3}>{errors.title}</Typography>}
           </Box>
-          <Box component="div" my={1}>
-          <Autocomplete
-            id='categoryId'
-            required
-            options={categories}
-            getOptionLabel={(option) => option.title}
-            onChange={(_, option) => setCategoryId(option)}
-            style={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label='Category' variant='outlined' />}
-          />
-            {errors.categoryId && <Typography color="error" mt={3}>{errors.categoryId}</Typography>}
-            </Box>
-          <Box component="div" my={1}>
-          <DropzoneArea
-            acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
-            filesLimit={1}
-            dropzoneText="Drag and drop your 256x256 pixel image file here or click"
-            onChange={loadedFiles => setPoster(loadedFiles.length > 0 ? loadedFiles.pop() : null)}
-            maxFileSize={2e+8}
-          />
-          {errors.poster && <Typography color="error">{errors.poster}</Typography>}
-            </Box>
-          <Box component="div" my={1}>
-          <DropzoneArea
-            acceptedFiles={['video/mp4', 'video/quicktime']}
-            filesLimit={1}
-            dropzoneText="Drag and drop your mp4/mov video file here or click"
-            onChange={loadedFiles => setClip(loadedFiles.length > 0 ? loadedFiles.pop() : null)}
-            maxFileSize={2e+8}
+          <Box component='div' my={1}>
+            <Autocomplete
+              id='categoryId'
+              required
+              options={categories}
+              getOptionLabel={(option) => option.title}
+              onChange={(_, option) => setCategoryId(option)}
+              style={{ width: 300 }}
+              renderInput={(params) => <TextField {...params} label='Category' variant='outlined' />}
             />
-          {errors.clip && <Typography color="error">{errors.clip}</Typography>}
-            </Box>
+            {errors.categoryId && <Typography color='error' mt={3}>{errors.categoryId}</Typography>}
+          </Box>
+          <Box component='div' my={1}>
+            <DropzoneArea
+              acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
+              filesLimit={1}
+              dropzoneText='Drag and drop your 256x256 pixel image file here or click'
+              onChange={loadedFiles => setPoster(loadedFiles.length > 0 ? loadedFiles.pop() : null)}
+              maxFileSize={2e+8}
+            />
+            {errors.poster && <Typography color='error'>{errors.poster}</Typography>}
+          </Box>
+          <Box component='div' my={1}>
+            <DropzoneArea
+              acceptedFiles={['video/mp4', 'video/quicktime']}
+              filesLimit={1}
+              dropzoneText='Drag and drop your mp4/mov video file here or click'
+              onChange={loadedFiles => setClip(loadedFiles.length > 0 ? loadedFiles.pop() : null)}
+              maxFileSize={2e+8}
+            />
+            {errors.clip && <Typography color='error'>{errors.clip}</Typography>}
+          </Box>
 
           <Button
             type='submit'
@@ -161,11 +159,11 @@ const Uploader = () => {
         </form>
 
         <Backdrop className={classes.backdrop} open={loading}>
-          <CircularProgress color="inherit" />
+          <CircularProgress color='inherit' />
         </Backdrop>
 
         <Snackbar open={success} autoHideDuration={6000} onClose={() => setSuccess(false)}>
-          <Alert elevation={6} variant="filled" onClose={() => setSuccess(false)} severity="success">
+          <Alert elevation={6} variant='filled' onClose={() => setSuccess(false)} severity='success'>
             Video successfully added!
           </Alert>
         </Snackbar>
