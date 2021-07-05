@@ -27,9 +27,3 @@ export const getVideos = async () => {
   console.log('got response:', result)
   return result.data
 }
-
-export const xxxgetVideos = async (setData) => {
-  const result = await axios(`${process.env.REACT_APP_API_URL}/videos`)
-  console.log('got response:', result)
-  setData(result.data)
-}
