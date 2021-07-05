@@ -1,0 +1,22 @@
+version: '3'
+
+#networks:
+# your custom network
+#  kong_knet:
+#    external: true
+
+services:
+  casvid_front:
+    restart: always
+    image: casvid_front
+    build:
+      context: .
+      args:
+        REACT_APP_API_URL: 'https://casvid-api.aqlinux.ir'
+        REACT_APP_ASSETS_HOST: 'https://casvid-api.aqlinux.ir'
+    environment:
+      - REACT_APP_API_URL=https://casvid-api.aqlinux.ir
+      - REACT_APP_ASSETS_HOST=https://casvid-api.aqlinux.ir
+#    networks:
+#      - kong_knet
+    container_name: casvid_front
