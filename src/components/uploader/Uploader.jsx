@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import Button from '@material-ui/core/Button'
-import { Link as RLink } from 'react-router-dom'
+import { Link as RLink, useHistory } from 'react-router-dom'
 import { DropzoneArea } from 'material-ui-dropzone'
 
 import { Backdrop, CircularProgress, Snackbar } from '@material-ui/core'
@@ -48,9 +48,16 @@ const Uploader = () => {
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  const history = useHistory()
+
   useEffect(() => {
     getCategories(setCategories).catch(e => console.log({ e }))
   }, [])
+
+  const afterSuccess = () => {
+    setSuccess(false)
+    history.goBack()
+  }
 
   const updateTitle = value => {
     if (!value) { setErrors({ ...errors, title: 'Title is required' }) }
@@ -162,8 +169,8 @@ const Uploader = () => {
           <CircularProgress color='inherit' />
         </Backdrop>
 
-        <Snackbar open={success} autoHideDuration={6000} onClose={() => setSuccess(false)}>
-          <Alert elevation={6} variant='filled' onClose={() => setSuccess(false)} severity='success'>
+        <Snackbar open={success} autoHideDuration={3000} onClose={afterSuccess}>
+          <Alert elevation={6} variant='filled' onClose={afterSuccess} severity='success'>
             Video successfully added!
           </Alert>
         </Snackbar>
