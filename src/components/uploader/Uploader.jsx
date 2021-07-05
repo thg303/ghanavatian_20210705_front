@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
@@ -8,13 +9,12 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 import Button from '@material-ui/core/Button'
 import { Link as RLink, useHistory } from 'react-router-dom'
 import { DropzoneArea } from 'material-ui-dropzone'
-
 import { Backdrop, CircularProgress, Snackbar } from '@material-ui/core'
-
 import { Alert } from '@material-ui/lab'
 
 import { getCategories } from '../../api/categories'
 import { createVideo } from '../../api/videos'
+import { loadVideosAsync } from '../../features/video/VideoSlice'
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Uploader = () => {
   const classes = useStyles()
+  const dispatch = useDispatch()
   const [title, setTitle] = useState(null)
   const [categories, setCategories] = useState([])
   const [categoryId, setCategoryId] = useState(null)
@@ -56,6 +57,7 @@ const Uploader = () => {
 
   const afterSuccess = () => {
     setSuccess(false)
+    dispatch(loadVideosAsync())
     history.goBack()
   }
 

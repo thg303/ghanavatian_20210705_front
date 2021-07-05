@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
-
+import { useSelector, useDispatch } from 'react-redux'
 import Button from '@material-ui/core/Button'
-
 import Card from '@material-ui/core/Card'
 import { CardActionArea, CardContent, CardMedia, Modal, Fade, Backdrop } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid'
@@ -9,7 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 
-import { getVideos } from '../../api/videos'
+import { loadVideosAsync, selectVideos, selectStatus } from '../../features/video/VideoSlice'
 
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
@@ -48,7 +47,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Album = () => {
   const classes = useStyles()
-  const [videos, setVideos] = useState([])
+  const videos = useSelector(selectVideos)
+  const apiStatus = useSelector(selectStatus)
+  const dispatch = useDispatch()
+
   const [open, setOpen] = useState(false)
   const [selectedVideo, setSelectedVideo] = useState(null)
 
@@ -59,12 +61,12 @@ const Album = () => {
   }
 
   useEffect(() => {
-    getVideos(setVideos).catch(e => console.log({ e }))
+    dispatch(loadVideosAsync())
   }, [])
 
   return (
     <Container className={classes.cardGrid} maxWidth='md'>
-      {videos.length === 0 &&
+      {apiStatus === 'idle' && videos.length === 0 &&
         <Card className={classes.cardFull}>
           <CardContent>
             <Typography variant='h5' component='h2' align='center'>Yay! you are the first one to upload a video.</Typography>
