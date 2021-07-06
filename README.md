@@ -1,4 +1,4 @@
-# Adjoe Frontend Developer Task 
+# CASVID FRONTEND
 The goal of this task is to create a single-page application with React which allows user to upload video, 
 and see their videos using [CASVID_API](https://github.com/thg303/ghanavatian_20210705_api)  
 
