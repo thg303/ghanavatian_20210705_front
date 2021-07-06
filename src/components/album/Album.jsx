@@ -114,7 +114,7 @@ const Album = () => {
           <div className={classes.paper}>
             {selectedVideo &&
               <video width={320} height={240} controls>
-                <source src={process.env.REACT_APP_ASSETS_HOST + selectedVideo.clip.url} type={selectedVideo.clip_type} />
+                <source src={process.env.REACT_APP_ASSETS_HOST + selectedVideo.clip.url} type='video/mp4' />
                 <Typography>Sorry, your browser does not support our video player.</Typography>
               </video>}
             <Button onClick={() => setOpen(false)}>close</Button>
