@@ -62,7 +62,7 @@ const Album = () => {
 
   useEffect(() => {
     dispatch(loadVideosAsync())
-  }, [])
+  }, [dispatch])
 
   return (
     <Container className={classes.cardGrid} maxWidth='md'>
@@ -79,7 +79,7 @@ const Album = () => {
               <CardActionArea onClick={() => play(aVideo)}>
                 <CardMedia
                   className={classes.cardMedia}
-                  image={process.env.REACT_APP_ASSETS_HOST + aVideo.poster.url}
+                  image={process.env.REACT_APP_ASSETS_HOST + aVideo.clip.poster.url}
                   title={aVideo.title}
                 />
               </CardActionArea>

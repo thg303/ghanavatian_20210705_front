@@ -43,9 +43,8 @@ const Uploader = () => {
   const [title, setTitle] = useState(null)
   const [categories, setCategories] = useState([])
   const [categoryId, setCategoryId] = useState(null)
-  const [poster, setPoster] = useState(null)
   const [clip, setClip] = useState(null)
-  const [errors, setErrors] = useState({ title: '', categoryId: '', poster: '', clip: '' })
+  const [errors, setErrors] = useState({ title: '', categoryId: '', clip: '' })
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -74,7 +73,6 @@ const Uploader = () => {
     const newErrors = {}
     if (!title) { newErrors.title = 'Title is required' }
     if (!categoryId) { newErrors.categoryId = 'A category should be selected' }
-    if (!poster) { newErrors.poster = 'we need a poster for your video' }
     if (!clip) { newErrors.clip = 'video is missing' }
     setErrors(newErrors)
     for (const key in newErrors) {
@@ -93,7 +91,7 @@ const Uploader = () => {
 
     setLoading(true)
 
-    createVideo({ title, categoryId: categoryId.value, poster, clip })
+    createVideo({ title, categoryId: categoryId.value, clip })
       .then(() => setSuccess(true))
       .catch(e => console.log('errr'))
       .finally(() => setLoading(false))
@@ -137,16 +135,6 @@ const Uploader = () => {
           </Box>
           <Box component='div' my={1}>
             <DropzoneArea
-              acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
-              filesLimit={1}
-              dropzoneText='Drag and drop your 256x256 pixel image file here or click'
-              onChange={loadedFiles => setPoster(loadedFiles.length > 0 ? loadedFiles.pop() : null)}
-              maxFileSize={2e+8}
-            />
-            {errors.poster && <Typography color='error'>{errors.poster}</Typography>}
-          </Box>
-          <Box component='div' my={1}>
-            <DropzoneArea
               acceptedFiles={['video/mp4', 'video/quicktime']}
               filesLimit={1}
               dropzoneText='Drag and drop your mp4/mov video file here or click'
@@ -171,7 +159,7 @@ const Uploader = () => {
           <CircularProgress color='inherit' />
         </Backdrop>
 
-        <Snackbar open={success} autoHideDuration={3000} onClose={afterSuccess}>
+        <Snackbar open={success} autoHideDuration={1500} onClose={afterSuccess}>
           <Alert elevation={6} variant='filled' onClose={afterSuccess} severity='success'>
             Video successfully added!
           </Alert>
